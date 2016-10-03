@@ -7,28 +7,26 @@
 <body>
 
 <h1>Hello World.</h1>
+<div id="content"></div>
 
 <script src="socket.io-client/socket.io.js"></script>
 <script>
     var io = new io.connect('http://localhost:3000');
+    var content = document.getElementById('content');
     
     io.on('connect', function() {
-      console.log("Connected");
+      console.log('Connected');
+      io.emit('message', Math.random());
     });
 
-    io.on('message', function(message){
-      console.log(message);  
+    io.on('occupations', function(data){
+      var html = '<ul>';
+      for(var i = 0; i < data.length - 1; i++){
+        html += '<li>' + data[i].text + '</li>';
+      }
+      html += '</ul>';
+      content.insertAdjacentHTML('afterbegin', html);
     });
-
-    /// send key to server
-    io.emit('message', 'users');
-
-    /// listen to the server to get
-    /// the users data
-    io.on('users', function(data){
-      console.log(data);
-    });
-
 </script>
 
 </body>
