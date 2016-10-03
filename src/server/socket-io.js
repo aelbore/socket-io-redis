@@ -11,6 +11,16 @@ let redisClient = redis.createClient();
 let socketio = {
   onInit: (server) => {
     let ioSocket = io.listen(server);
+
+    sub.subscribe('user');
+
+    sub.on('message', (channel, message) => {
+      redisClient.get(message, (err, value) => {
+        let data = JSON.stringify(JSON.parse(value));
+        console.log(data);
+      });
+    });
+
     ioSocket.sockets.on('connection', (socket) => {
 
       /// listen to the emit events from client
@@ -28,6 +38,7 @@ let socketio = {
 
           values.push(value);
 
+          /// emit to front-end/ui
           socket.emit('users', values);
         });
 
