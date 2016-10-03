@@ -2,6 +2,8 @@
 
 import * as io from 'socket.io';
 import * as redis from 'redis';
+import * as path from 'path';
+
 
 let sub = redis.createClient();
 let pub = redis.createClient();
@@ -11,15 +13,6 @@ let redisClient = redis.createClient();
 let socketio = {
   onInit: (server) => {
     let ioSocket = io.listen(server);
-
-    sub.subscribe('user');
-
-    sub.on('message', (channel, message) => {
-      redisClient.get(message, (err, value) => {
-        let data = JSON.stringify(JSON.parse(value));
-        console.log(data);
-      });
-    });
 
     ioSocket.sockets.on('connection', (socket) => {
 
@@ -41,6 +34,15 @@ let socketio = {
           /// emit to front-end/ui
           socket.emit('users', values);
         });
+
+        sub.subscribe('user');
+
+        sub.on('message', (channel, message) => {
+          redisClient.get(message, (err, value) => {
+            let data = JSON.stringify(JSON.parse(value));
+            console.log(data);
+          });
+        });       
 
       });
 
