@@ -17,4 +17,11 @@ https://medium.com/@petehouston/install-and-config-redis-on-mac-os-x-via-homebre
   cd socket-io-redis
   npm install
   node start
+  
+  Open another terminal window (for running the redis)
+  redis-server /usr/local/etc/redis.conf
+  
+  Open another terminal window/tab
+  redis-cli
+  publish app 'occupations' 
 ```
