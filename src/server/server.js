@@ -9,8 +9,9 @@ import { socketio } from './socket-io';
 import { redisSubscriber } from './redis-subscriber';
 
 let server = http.createServer(app);
-//socketio.onInit(server);
-redisSubscriber.listen();
+socketio.onInit(server);
+
+//redisSubscriber.listen();
 
 server.listen(3000, 'localhost');
 server.on('listening', () => {

@@ -19,7 +19,8 @@ let redisSubscriber = {
                 break;
             }
         });
-        client.psubscribe('*'); // subscribes the client to all patterns
+        // subscribes the client to all patterns
+        client.psubscribe('*'); 
     }
 }
 
