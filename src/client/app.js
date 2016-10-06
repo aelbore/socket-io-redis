@@ -7,16 +7,12 @@
   /// listen to connect message
   socket.on('connect', function() {
     console.log('Connected');
-    socket.emit('message', Math.random());
+    socket.emit('message', ['SG_GROUP', 'user'+Math.random()]);
   });
 
   /// listen to occupations message
   socket.on('occupations', function(data){
-    var html = '<ul>';
-    for(var i = 0; i < data.length - 1; i++){
-      html += '<li>' + data[i].text + '</li>';
-    }
-    html += '</ul>';
+    var html = '<div>' + data + '</div>';
     content.insertAdjacentHTML('afterbegin', html);
   }); 
 
