@@ -1,14 +1,17 @@
+/// <reference path="../../typings/index.d.ts" />
 
 import express from 'express';
-import * as path from 'path';
+import * as http from 'http';
+import * as redis from 'redis';
 
-let app = express();
+import { app } from './app';
+import { socketio } from './socket-io';
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/index.html'));
+let server = http.createServer(app);
+socketio.onInit(server);
+
+server.listen(3000, 'localhost');
+server.on('listening', () => {
+  let { port, address } = server.address();
+  console.log(`Express server started on port ${port} at ${address}.`);
 });
-
-app.use('/', express.static('src/client'));
-app.use('/', express.static('node_modules'));
-
-export { app }
