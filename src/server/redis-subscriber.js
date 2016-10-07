@@ -4,7 +4,7 @@ var client = redis.createClient();
 
 // For this to work, remember to set notify-keyspace-events correctly in your redis configuration (Eg$ will suffice)
 // More info on notify-keyspace-events on http://redis.io/topics/notifications
-let redisSubscriber = {
+let RedisSubscriber = {
     listenWithSocket: (ioSocket) => {
         client.on('pmessage', function(pattern, channel, key) {
             console.log('Room: ' + channel);
@@ -14,4 +14,4 @@ let redisSubscriber = {
     }
 }
 
-export { redisSubscriber }
+export { RedisSubscriber }
